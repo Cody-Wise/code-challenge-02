@@ -75,7 +75,7 @@ Output:
 */
 
 export function getTotalOfEachGender(customers) {
-  customers.reduce((acc, customer) => {
+  return customers.reduce((acc, customer) => {
     if (acc[customer.gender]) {
       acc[customer.gender]++;
     } else {
@@ -97,7 +97,17 @@ Output:
 */
 
 export function getGenderBreakdownOfFordOwners(customers) {
-  return true;
+  return customers
+    .filter((customer) => customer.car_make === 'Ford')
+    .reduce((acc, customer) => {
+      if (acc[customer.gender]) {
+        acc[customer.gender]++;
+      } else {
+        acc[customer.gender] = 1;
+      }
+
+      return acc;
+    }, {});
 }
 
 /* 
@@ -118,7 +128,22 @@ Output:
 */
 
 export function getGenderBreakdownOfEachCar(customers) {
-  return true;
+  const answer = customers.reduce((acc, customer) => {
+    if (!acc[customer.car_make]) {
+      acc[customer.car_make] = customers
+        .filter((innerCustomer) => customer.car_make === innerCustomer.car_make)
+        .reduce((acc, customer) => {
+          if (!acc[customer.gender]) {
+            acc[customer.gender] = 1;
+          } else {
+            acc[customer.gender]++;
+          }
+          return acc;
+        }, {});
+    }
+    return acc;
+  }, {});
+  return answer;
 }
 
 /* 
@@ -132,7 +157,14 @@ Output:
 */
 
 export function getAllCoolFactorsOfEachCar(customers) {
-  return true;
+  return customers.reduce((acc, customer) => {
+    if (!acc[customer.car_make]) {
+      acc[customer.car_make] = [customer.cool_factor];
+    } else {
+      acc[customer.car_make].push(customer.cool_factor);
+    }
+    return acc;
+  }, {});
 }
 
 /////////////////////////////// STRETCH GOALS ///////////////////////////////////////

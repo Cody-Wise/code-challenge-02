@@ -59,7 +59,7 @@
         "after": true,
         "overrides": {
           "if": {
-            "after": false
+            "after": true
           },
           "for": {
             "after": false
